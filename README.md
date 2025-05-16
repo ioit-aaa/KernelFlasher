@@ -1,5 +1,7 @@
 # Kernel Flasher
 
+**English** [简体中文](README_CN.md)
+
 Kernel Flasher is an Android app to flash, backup, and restore kernels.
 
 ## Usage
