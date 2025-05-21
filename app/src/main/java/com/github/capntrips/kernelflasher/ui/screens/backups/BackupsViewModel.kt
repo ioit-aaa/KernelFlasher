@@ -1,6 +1,5 @@
 package com.github.capntrips.kernelflasher.ui.screens.backups
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -82,9 +81,7 @@ class BackupsViewModel(
     fun refresh(context: Context) {
         val oldDir = context.getExternalFilesDir(null)
         val oldBackupsDir = File(oldDir, "backups")
-        @Deprecated("Backup migration will be removed in the first stable release")
         _needsMigration.value = oldBackupsDir.exists() && oldBackupsDir.listFiles()?.size!! > 0
-        @SuppressLint("SdCardPath")
         val externalDir = File("/sdcard/KernelFlasher")
         val backupsDir = fileSystemManager.getFile("$externalDir/backups")
         if (backupsDir.exists()) {
@@ -120,7 +117,6 @@ class BackupsViewModel(
         }
     }
 
-    @Suppress("SameParameterValue")
     private fun log(context: Context, message: String, shouldThrow: Boolean = false) {
         Log.d(TAG, message)
         if (!shouldThrow) {
@@ -143,7 +139,6 @@ class BackupsViewModel(
         }
     }
 
-    @Suppress("FunctionName")
     private fun _clearRestore() {
         _restoreOutput.clear()
         wasRestored = null
@@ -154,8 +149,6 @@ class BackupsViewModel(
         _backupPartitions.clear()
     }
 
-    @Suppress("unused")
-    @SuppressLint("SdCardPath")
     fun saveLog(context: Context) {
         launch {
             val now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd--HH-mm"))
@@ -200,7 +193,6 @@ class BackupsViewModel(
     fun restore(context: Context, slotSuffix: String) {
         launch {
             _clearRestore()
-            @SuppressLint("SdCardPath")
             val externalDir = File("/sdcard/KernelFlasher")
             val backupsDir = fileSystemManager.getFile("$externalDir/backups")
             val backupDir = backupsDir.getChildFile(currentBackup!!)
@@ -220,7 +212,6 @@ class BackupsViewModel(
 
     fun delete(context: Context, callback: () -> Unit) {
         launch {
-            @SuppressLint("SdCardPath")
             val externalDir = File("/sdcard/KernelFlasher")
             val backupsDir = fileSystemManager.getFile("$externalDir/backups")
             val backupDir = backupsDir.getChildFile(currentBackup!!)
@@ -236,7 +227,6 @@ class BackupsViewModel(
         }
     }
 
-    @SuppressLint("SdCardPath")
     @Deprecated("Backup migration will be removed in the first stable release")
     fun migrate(context: Context) {
         launch {
@@ -264,10 +254,8 @@ class BackupsViewModel(
                             continue
                         }
                         val propFile = File(child, "backup.prop")
-                        @Suppress("BlockingMethodInNonBlockingContext")
                         val inputStream = FileInputStream(propFile)
                         val props = Properties()
-                        @Suppress("BlockingMethodInNonBlockingContext")
                         props.load(inputStream)
 
                         val name = child.name
