@@ -63,29 +63,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private var rootServiceConnected: Boolean = false
     private var viewModel: MainViewModel? = null
     private lateinit var mainListener: MainListener
     var isAwaitingResult = false
-
-    inner class AidlConnection : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName, service: IBinder) {
-            if (!rootServiceConnected) {
-                val ipc: IFilesystemService = IFilesystemService.Stub.asInterface(service)
-                val binder: IBinder = ipc.fileSystemService
-                onAidlConnected(FileSystemManager.getRemote(binder))
-                rootServiceConnected = true
-            }
-        }
-
-        override fun onServiceDisconnected(name: ComponentName) {
-            setContent {
-                KernelFlasherTheme {
-                    ErrorScreen(stringResource(R.string.root_service_disconnected))
-                }
-            }
-        }
-    }
 
     private fun copyAsset(filename: String) {
         val dest = File(filesDir, filename)
@@ -139,7 +119,7 @@ class MainActivity : ComponentActivity() {
         content.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
-                    return if (viewModel?.isRefreshing == false || Shell.isAppGrantedRoot() == false) {
+                    return if (viewModel?.isRefreshing == false) {
                         content.viewTreeObserver.removeOnPreDrawListener(this)
                         true
                     } else {
@@ -149,19 +129,6 @@ class MainActivity : ComponentActivity() {
             }
         )
 
-        // Shell.getShell()
-        // if (Shell.isAppGrantedRoot()!!) {
-        //     val intent = Intent(this, FilesystemService::class.java)
-        //     RootService.bind(intent, AidlConnection())
-        // } else {
-        //     setContent {
-        //         KernelFlasherTheme {
-        //             ErrorScreen(stringResource(R.string.root_required))
-        //         }
-        //     }
-        // }
-
-        // 直接加载主页面
         setContent {
             val navController = rememberNavController()
             viewModel = viewModel {
