@@ -1,4 +1,4 @@
 git checkout ioit-aaa
-git merge main --rebase
+git merge main
 git push
 git checkout main
