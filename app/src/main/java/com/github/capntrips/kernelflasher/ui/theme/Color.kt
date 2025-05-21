@@ -1,6 +1,8 @@
-package com.example.compose
+package com.github.capntrips.kernelflasher.ui.theme
+
 import androidx.compose.ui.graphics.Color
 
+// Light Theme Colors
 val primaryLight = Color(0xFF4C662B)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFCDEDA3)
@@ -37,6 +39,7 @@ val surfaceContainerLight = Color(0xFFEEEFE3)
 val surfaceContainerHighLight = Color(0xFFE8E9DE)
 val surfaceContainerHighestLight = Color(0xFFE2E3D8)
 
+// Light Medium Contrast Colors
 val primaryLightMediumContrast = Color(0xFF253D05)
 val onPrimaryLightMediumContrast = Color(0xFFFFFFFF)
 val primaryContainerLightMediumContrast = Color(0xFF5A7539)
@@ -73,6 +76,7 @@ val surfaceContainerLightMediumContrast = Color(0xFFE8E9DE)
 val surfaceContainerHighLightMediumContrast = Color(0xFFDCDED3)
 val surfaceContainerHighestLightMediumContrast = Color(0xFFD1D3C8)
 
+// Light High Contrast Colors
 val primaryLightHighContrast = Color(0xFF1C3200)
 val onPrimaryLightHighContrast = Color(0xFFFFFFFF)
 val primaryContainerLightHighContrast = Color(0xFF375018)
@@ -109,6 +113,7 @@ val surfaceContainerLightHighContrast = Color(0xFFE2E3D8)
 val surfaceContainerHighLightHighContrast = Color(0xFFD4D5CA)
 val surfaceContainerHighestLightHighContrast = Color(0xFFC6C7BD)
 
+// Dark Theme Colors
 val primaryDark = Color(0xFFB1D18A)
 val onPrimaryDark = Color(0xFF1F3701)
 val primaryContainerDark = Color(0xFF354E16)
@@ -145,6 +150,7 @@ val surfaceContainerDark = Color(0xFF1E201A)
 val surfaceContainerHighDark = Color(0xFF282B24)
 val surfaceContainerHighestDark = Color(0xFF33362E)
 
+// Dark Medium Contrast Colors
 val primaryDarkMediumContrast = Color(0xFFC7E79E)
 val onPrimaryDarkMediumContrast = Color(0xFF172B00)
 val primaryContainerDarkMediumContrast = Color(0xFF7D9A59)
@@ -181,6 +187,7 @@ val surfaceContainerDarkMediumContrast = Color(0xFF262922)
 val surfaceContainerHighDarkMediumContrast = Color(0xFF31342C)
 val surfaceContainerHighestDarkMediumContrast = Color(0xFF3C3F37)
 
+// Dark High Contrast Colors
 val primaryDarkHighContrast = Color(0xFFDAFBB0)
 val onPrimaryDarkHighContrast = Color(0xFF000000)
 val primaryContainerDarkHighContrast = Color(0xFFADCD86)
@@ -217,9 +224,5 @@ val surfaceContainerDarkHighContrast = Color(0xFF2F312A)
 val surfaceContainerHighDarkHighContrast = Color(0xFF3A3C35)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF454840)
 
-
-
-
-
-
-
+// Additional Colors
+val Orange500 = Color(0xFFFF5722) // 添加 Orange500，匹配 Theme.kt
