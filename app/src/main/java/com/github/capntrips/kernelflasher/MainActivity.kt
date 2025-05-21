@@ -50,7 +50,6 @@ import com.topjohnwu.superuser.nio.FileSystemManager
 import kotlinx.serialization.ExperimentalSerializationApi
 import java.io.File
 
-
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalMaterial3Api
@@ -150,39 +149,24 @@ class MainActivity : ComponentActivity() {
             }
         )
 
-        Shell.getShell()
-        if (Shell.isAppGrantedRoot()!!) {
-            val intent = Intent(this, FilesystemService::class.java)
-            RootService.bind(intent, AidlConnection())
-        } else {
-            setContent {
-                KernelFlasherTheme {
-                    ErrorScreen(stringResource(R.string.root_required))
-                }
-            }
-        }
-    }
+        // Shell.getShell()
+        // if (Shell.isAppGrantedRoot()!!) {
+        //     val intent = Intent(this, FilesystemService::class.java)
+        //     RootService.bind(intent, AidlConnection())
+        // } else {
+        //     setContent {
+        //         KernelFlasherTheme {
+        //             ErrorScreen(stringResource(R.string.root_required))
+        //         }
+        //     }
+        // }
 
-    fun onAidlConnected(fileSystemManager: FileSystemManager) {
-        try {
-            Shell.cmd("cd $filesDir").exec()
-            copyNativeBinary("lptools_static") // v20220825
-            copyNativeBinary("httools_static") // v3.2.0
-            copyNativeBinary("magiskboot") // v25.2
-            copyAsset("flash_ak3.sh")
-        } catch (e: Exception) {
-            Log.e(TAG, e.message, e)
-            setContent {
-                KernelFlasherTheme {
-                    ErrorScreen(e.message!!)
-                }
-            }
-        }
+        // 直接加载主页面
         setContent {
             val navController = rememberNavController()
             viewModel = viewModel {
                 val application = checkNotNull(get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY))
-                MainViewModel(application, fileSystemManager, navController)
+                MainViewModel(application, FileSystemManager.getLocal(), navController)
             }
             val mainViewModel = viewModel!!
             KernelFlasherTheme {
@@ -205,7 +189,6 @@ class MainActivity : ComponentActivity() {
                         RefreshableScreen(mainViewModel, navController, swipeEnabled = true) {
                             SlotContent(slotViewModel, slotSuffix, navController)
                         }
-
                     }
                     val slotFlashContent: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit = { backStackEntry ->
                         val slotSuffix = backStackEntry.arguments?.getString("slotSuffix") ?: ""
@@ -235,7 +218,6 @@ class MainActivity : ComponentActivity() {
                                 SlotFlashContent(slotViewModel!!, slotSuffix, navController)
                             }
                         }
-
                     }
                     NavHost(navController = navController, startDestination = "main") {
                         composable("main") {
@@ -300,7 +282,6 @@ class MainActivity : ComponentActivity() {
                             val currentUpdate = updatesViewModel.updates.firstOrNull { it.id == updateId }
                             updatesViewModel.currentUpdate = currentUpdate
                             if (updatesViewModel.currentUpdate != null) {
-                                // TODO: enable swipe refresh
                                 RefreshableScreen(mainViewModel, navController) {
                                     UpdatesViewContent(updatesViewModel, navController)
                                 }
